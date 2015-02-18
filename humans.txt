@@ -1,0 +1,16 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    <name> -- <role> -- <twitter>
+    Michael Rosata -- Developer -- OnethingSimple
+
+# THANKS
+
+    To anyone who supports this project or anyone who supports any open source project within the web development community.
+
+# TECHNOLOGY COLOPHON
+
+    HTML5, CSS3
+    jQuery, Modernizr

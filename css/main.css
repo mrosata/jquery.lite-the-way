@@ -1,0 +1,93 @@
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+    background: rgb(90,180,250);
+}
+.container {
+    background: #efefef;
+}
+.demo-text {
+    position: relative;
+}
+#testMeasure1 {
+    display: block;
+    position: absolute;
+    background: rgba(45, 45, 93, 0.6);
+    top: 0; left: 0; right: 0;
+    height: 160px;
+}
+#testMeasure2 {
+    display: block;
+    position: absolute;
+    background: rgba(45, 45, 93, 0.6);
+    bottom: 0; left: 0; right: 0;
+    height: 260px;
+}
+p.fade-out-text {
+    color: #aeaeae;
+}
+p {
+    text-indent: 1.75em;
+    color: #111;
+    transition: .4s all;
+}
+.litetheway-overlay {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(14,22,22,.1);
+    z-index: 1;
+}
+code.code-block {
+    display: block;
+    background: #f9f2f4;
+}
+em.st {
+    text-decoration: line-through;
+}
+span.comment {
+    color: #999;
+}
+@media (max-width: 768px) {
+    body {
+        font-size: 15px;
+    }
+    code.code-block {
+        font-size: 13px;
+    }
+    span.comment {
+        display: none;
+    }
+}
+@media (max-width: 539px) {
+    body {
+        font-size: 14px;
+    }
+    code.code-block {
+        font-size: 11px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

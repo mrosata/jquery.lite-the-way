@@ -1,0 +1,354 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 50px;
+            padding-bottom: 20px;
+        }
+    </style>
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!--[if lt IE 9]>
+            <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+            <script>window.html5 || document.write('<script src="js/vendor/html5shiv.js"><\/script>')</script>
+        <![endif]-->
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">LiteTheWay jQuery@OnethingSimple.com - By Michael Rosata Beta v0.1</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Lite the Way</h1>
+            <p>This is a jQuery plugin created to light up the general area of reading within a page. It is highly customizable and as easy as calling out <code>$('p').litetheway()</code> or you can customize many options yourself. Go ahead! Give it a try <em class='st'>and then press the button!</em>. Please note: the button hasn't been made active yet, it's not part of the plugin, when implemented, it will just be a fun easy way for you to experiement with plugin settings. So start reading or start scrolling!</p>
+            <ul>
+                <li><b><u>autoMargin : </u> </b> default = 0.25, ( unless false, autoMargin will recalculate the margin for active text based on screenheight / autoMargin if greater then 1, else screenheight * autoMargin. For example: 0.25 would be 25% of the screen height, so would 5 because dividing by 4 and multiplying by .25 are both legitimate ways to calculate percentages.</li>
+                <li><b><u>fixedMargin : </u> </b> default = false, if autoMargin is false, this is the set margin on all screen sizes. ( Not setup yet, sorry )</li>
+                <li><b><u>margin : </u> </b> default = 135, if autoMargin is false, this will be margin size used in px. 135 covers about 20% a normal browser window height. Because it's a measurement from the center up and down, realistically it's a 270px margin</li>
+                <li><b><u>start : </u> </b> default = 240, How many pixels after sthe top of the context area should lite-the-way be enabled and begin to add faded and active classes to elements. Unless otherwise stated, this number also defines 'end'</li>
+                <li><b><u>end : </u> </b> default = 240, How many pixel from the bottom edge of context area should lite-the-way be enabled. This is one of the few values at the moment that is measured by the bottom edge of the screen</li>
+                <li><b><u>active : </u> </b> default = 'active-text', The name of the css class apllied on elements that fall within the margin</li>
+                <li><b><u>faded : </u> </b> default = 'fade-out-text', The name of the css class applied to elements outside of the center margin</li>
+                <li><b><u>topMult: </u> </b> default = 1, Move the top line of the margin up or down by a percentage using multipliers. 1.5 would be 150% the size of regular top margin</li>
+                <li><b><u>bottomMult : </u> </b> default = 1 Same as topMult but for the bottom, another example, 0 would be 0%, so the bottom margin line would end at exactly center screen</li>
+                <li><b><u>cutoff : </u> </b> default = false, An element is normally active if it's top edge falls within main margins. Set cutoff to true, and lite-the-way will also measure by the bottom edge as well. However, note: at this time, that means any element with a top edge and bottom edge outside of the margins will be deactive. So paragraphs larger then the active area may never display active.</li>
+                <li><b><u>overlays : </u> </b> default = true, Whether or not to create div overlays ( at current time, overlays make text unselectable when active )</li>
+                <li><b><u>overlayPadding : </u> </b> default = 10, If overlays are visible, this will extend their borders, in case you don't want the overlays to start and stop exactly where the active and faded text meet.</li>
+                <li><b><u>overlayClass : </u> </b> default = 'litetheway-overlay'</li>
+                <li><b><u>document : </u> </b> default = document, which element to begin offset from ( so far only tested with the default, no idea how it works otherwise )</li>
+                
+            
+            </ul>
+            <p><a class="btn btn-primary btn-lg" href="#" role="button">Config using &raquo;</a>
+            </p>
+            <p>
+                This was instantiated using the following code:
+                <code class='code-block'><br />
+<span class="comment">// Set the plugin on paragraphs, only within container '.demo-text'</span><br />
+$('p').litetheway({<br />
+&nbsp;&nbsp;&nbsp;&nbsp;</span>document : '.demo-text',<br />
+&nbsp;&nbsp;&nbsp;&nbsp;</span>topMult  : 1.25,<span class="comment">            // top margin line is increased by 25% using</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;</span>start    : 160,<span class="comment">             // Start the plugin when top of window gets 160px down</span><br />   
+&nbsp;&nbsp;&nbsp;&nbsp;</span>cutoff   : true,<span class="comment">            // If elements bottom edge falls below margin, don't display it as active</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;end      : 260<span class="comment">              // Stop the plugin when bottom of window gets 260px down</span><br />
+});
+                </code>
+                ( The darkish blue area at top and bottom of the .demo-text area is not part of the plugin, it is to demonstrate how accurate the plugins activation and deactivation margin is. The top one is set at 160px from top of .demo-text and the bottom line at 260px. )
+            </p>
+        </div>
+    </div>
+
+    <div class="container demo-text">
+       <div id="testMeasure1" class='test-measure'> </div>
+       <div id="testMeasure2" class='test-measure'> </div>
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="col-md-6">
+                <h3>What is this?</h3>
+                <p>Lite the way, a plugin that allows you to easily create lighted up reading areas for your sites vistors in areas of large portions of text. The plugin is intended to make reading easier on the users eyes and not strain their vision. Using a set of margins which can be created using fixed width or screen percentage, paragraphs will lighten(ativate) or darken(deactivate) depending on whether or not they fall outside or inside of the margins. You are able to style your own active and inactive classes as well as overlays if you decide to use the overlay effect (part of the plugin as well). To get an idea for how Lite-the-Way works, use whichever means of scrolling you prefer and navigate this webpage up or down. Whenever you are more then the set 'start' distance from the top of this container, the paragraphs that fall outside of the defined margins will recieve classname 'fade-out-read' by default. So this plugin will be usable by simply declaring $('p').liteTheWay( options ) where 'p' could actually be any type of selector you want to be effected by the plugin, and options will be a JavaScrip object that allows you to override default settings such as top and bottom starting points, top and bottom margins for when 'Lite the Way' is active, custom classnames for elements that fall within the margins and for ones that fall outside the margins, margin top or bottom multipliers, colors for the overlays and even callback functions for certain plugin events are all possible to set, but completely optional. Lite-the-Way works very well with minimal settings too.</p>
+                <p>
+                    Some areas that need fixing... If Paragraphs become to large, then the chance that a paragraph could start and stop outside the margins set by plugin increase. This would mean only faded text. I am thinking of a solution for this. Most likely, a seperate option that will be on by default, and it will check for either this condition, or check that no paragraphs have the active class. Either way, there could be a dynamically injected &lt;span&gt; element that can wrap a portion of a paragraph with the active class. This can also solve an issue where over half the text in active margin is faded.
+                </p>
+                </p>
+                <p>
+                    Pri modo verear discere ut? Odio natum menandri eos ad. Possim accusam vituperata in vel. Sale nemore everti pro ad, iudico aperiri sed ad.
+                </p>
+                <p>
+                    Ad liber dolore erroribus eos, iracundia voluptatum ullamcorper per cu! Has elitr facilisis in, etiam doming tractatos no eum? Inani laoreet eu pri! Saperet ullamcorper cum ne, mei porro adversarium te? Sea sint repudiandae eu.
+                </p>
+                <p>
+                    An quo definiebas scripserit instructior. Probo nemore accumsan ad vix. Veri graece nostrum et duo, eros impedit mnesarchum at vix. Latine accusam probatus mei ea, eam porro principes torquatos ex. Case nobis verear ad eos, admodum tacimates pri ad. Primis aperiri verterem ex mel, esse falli noluisse sit ne. Ea per inani similique.
+                </p>
+                <p>
+                    Quo debitis deserunt ei, dolorum inermis ad eum, cetero efficiendi sea cu! Ex sit viris contentiones, ei ipsum elitr dolore quo. Illud atqui reformidans ex vel! Prompta placerat omittantur his id. Dicit vitae sensibus ut eam.
+                </p>
+                <p>
+                    Atqui postea melius ea cum, duo libris oportere at. Erant putent appareat pri at! Blandit intellegat dissentiunt at sed. Ne vide temporibus usu, has ad enim debitis singulis. Albucius mediocritatem nec no, cu quo prima graece. Mel putent appareat constituto eu, erant vitae vulputate nec eu!
+                </p>
+                <p>
+                    Quis gubergren ei ius, duo quem mucius platonem at. Soleat philosophia eu qui, nec id solum scaevola praesent, pro eros legimus oportere ne. An eos reque malorum adversarium. Nec offendit sapientem disputando ne.
+                </p>
+                <p>
+                    Per doctus iudicabit ad, falli semper recusabo qui et. Quis vituperatoribus vis ut, in mel integre tacimates mediocritatem. Pri ad labores partiendo. Id enim vidisse vis, vel in velit oblique efficiendi!
+                </p>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    No pertinacia definitionem mei, cum vidisse admodum adversarium id! Invidunt tractatos honestatis ea pro, audiam veritus ex nec, pro eu probo eirmod! Cetero euripidis an eum, ei postea adolescens usu. Fastidii erroribus theophrastus ei mel. Per et paulo theophrastus, nam no veri reque fuisset, eos at decore dissentiunt.
+                </p>
+                <p>
+                    Eripuit tincidunt te pri, id expetenda ocurreret duo, ius et causae oporteat philosophia. Eu wisi posse clita per! Vix modo zril in, usu congue virtute in, pro te dolore tibique abhorreant. Accusata suavitate ius in, ius nibh senserit ut, sea justo civibus offendit ad! Impedit consulatu tincidunt eu cum, inani suavitate assueverit mel ea! Ei scriptorem scribentur sit, ea esse possim integre nec, te persecuti delicatissimi ius.
+                </p>
+                <p>
+                    Ei perfecto volutpat vix? Te vim tacimates vulputate, id voluptua tractatos nec! Eu ius quem omnesque, ius deleniti fabellas ne, te quas noluisse adversarium pro! Eos id maiorum molestie, affert recteque id eam, pri unum option no! Et ius mandamus ullamcorper. Sint scripta ea mel!
+                </p>
+                <p>
+                    An est zril ridens. Mel ea elit alterum dignissim. Nemore ornatus comprehensam nam no. Esse feugait tractatos vix in. Sea te vide euripidis interesset, esse quidam copiosae te mel.
+                </p>
+                <p>
+                    Quot elit nemore ne qui. Vel laoreet inermis intellegat ea. Qui graece iudicabit id, et cum porro nostrum. Delenit iudicabit eos ne, verear ancillae pertinax vim id. Lorem liber patrioque id mea, sale errem laboramus eu eos, at iudico quando qui! An esse cetero forensibus mel.
+                </p>
+                <p>
+                    Tation eleifend reprehendunt ad ius. Nec te tritani iuvaret, an duo perpetua interpretaris concludaturque? Omnis detracto sea cu. Vix evertitur disputationi ne! Pri at erat utamur docendi, cum in sumo eius iisque, volumus ponderum constituto eos an.
+                </p>
+                <p>
+                    An molestiae liberavisse sed. Populo eripuit similique an pri, zril invidunt consulatu ea has, eu pro stet modus senserit? Dicit ludus vel ea. In nibh tractatos vis! Nec agam inciderint te, eam malorum facilis ei.
+                </p>
+                <p>
+                    Vim te modo convenire moderatius, in percipitur dissentiet mel? Vim minim regione accusamus eu. Appetere similique ei duo, mel aeterno neglegentur et, sea dolorem appetere appellantur ad? Eos mutat indoctum dignissim at, senserit persecuti at eam. Qui nisl iriure iisque an, eam ne natum pericula deseruisse, aeque lobortis nec eu.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    No pertinacia definitionem mei, cum vidisse admodum adversarium id! Invidunt tractatos honestatis ea pro, audiam veritus ex nec, pro eu probo eirmod! Cetero euripidis an eum, ei postea adolescens usu. Fastidii erroribus theophrastus ei mel. Per et paulo theophrastus, nam no veri reque fuisset, eos at decore dissentiunt.
+                </p>
+                <p>
+                    Eripuit tincidunt te pri, id expetenda ocurreret duo, ius et causae oporteat philosophia. Eu wisi posse clita per! Vix modo zril in, usu congue virtute in, pro te dolore tibique abhorreant. Accusata suavitate ius in, ius nibh senserit ut, sea justo civibus offendit ad! Impedit consulatu tincidunt eu cum, inani suavitate assueverit mel ea! Ei scriptorem scribentur sit, ea esse possim integre nec, te persecuti delicatissimi ius.
+                </p>
+                <p>
+                    Ei perfecto volutpat vix? Te vim tacimates vulputate, id voluptua tractatos nec! Eu ius quem omnesque, ius deleniti fabellas ne, te quas noluisse adversarium pro! Eos id maiorum molestie, affert recteque id eam, pri unum option no! Et ius mandamus ullamcorper. Sint scripta ea mel!
+                </p>
+                <p>
+                    An est zril ridens. Mel ea elit alterum dignissim. Nemore ornatus comprehensam nam no. Esse feugait tractatos vix in. Sea te vide euripidis interesset, esse quidam copiosae te mel.
+                </p>
+                <p>
+                    Quot elit nemore ne qui. Vel laoreet inermis intellegat ea. Qui graece iudicabit id, et cum porro nostrum. Delenit iudicabit eos ne, verear ancillae pertinax vim id. Lorem liber patrioque id mea, sale errem laboramus eu eos, at iudico quando qui! An esse cetero forensibus mel.
+                </p>
+                <p>
+                    Tation eleifend reprehendunt ad ius. Nec te tritani iuvaret, an duo perpetua interpretaris concludaturque? Omnis detracto sea cu. Vix evertitur disputationi ne! Pri at erat utamur docendi, cum in sumo eius iisque, volumus ponderum constituto eos an.
+                </p>
+                <p>
+                    An molestiae liberavisse sed. Populo eripuit similique an pri, zril invidunt consulatu ea has, eu pro stet modus senserit? Dicit ludus vel ea. In nibh tractatos vis! Nec agam inciderint te, eam malorum facilis ei.
+                </p>
+                <p>
+                    Vim te modo convenire moderatius, in percipitur dissentiet mel? Vim minim regione accusamus eu. Appetere similique ei duo, mel aeterno neglegentur et, sea dolorem appetere appellantur ad? Eos mutat indoctum dignissim at, senserit persecuti at eam. Qui nisl iriure iisque an, eam ne natum pericula deseruisse, aeque lobortis nec eu.
+                </p>
+                <p>
+                    Veri voluptatum vis an. Vide virtute et mea. His eu soleat legendos sententiae, has malis graece ea. Mea ad nihil alterum? Solum liber percipitur an nec, suas laudem id his! Ei audire equidem eos?
+                </p>
+                <p>
+                    Usu no idque temporibus, ius timeam quaeque corpora te? Mucius graeci nemore quo at, ex facer signiferumque sed! Has te porro dolorum facilisi, eos ei sint fabulas singulis. Melius fierent nec ea, mel ex augue officiis. Reque harum nobis sea no. Pri eius tamquam cotidieque ea, nec in option liberavisse concludaturque, ea pro accumsan noluisse interpretaris.
+                </p>
+                <p>
+                    Quot prima ad sed, ex eum wisi ipsum gubergren, ut mei odio postulant? Vix no suscipit apeirian. Falli blandit cu vel, et per dolore urbanitas definitiones? Ne natum facilisi pri.
+                </p>
+                <p>
+                    Tincidunt pertinacia has et, ne mazim verear scripta sit. No audire fierent vim! Te duo prodesset vituperata, meis illud regione no mei, at aperiri quaerendum suscipiantur his. His reque velit no, nec luptatum pertinacia reprehendunt no! Ut mei minim option volumus. Discere sensibus eloquentiam id mel.
+                </p>
+                <p>
+                    Sit iusto oblique ad, no audire dissentias sit! Te sed suscipit scripserit sadipscing. His ad esse consequat, eos ei dolor option ceteros, legendos pericula democritum te pri. Usu mazim ridens et, ea usu graeci sensibus, ad sed everti maiorum! Duo te choro dictas reformidans. Ea pericula eloquentiam dissentiunt vis!
+                </p>
+                <p>
+                    No nec labore audiam, ad pro tollit lucilius instructior. At qui quis principes temporibus, an posse option fierent vis. An quo gloriatur forensibus, maiorum maluisset vituperata nam id, eum et rebum voluptaria. Has at vero rebum qualisque. Vis id platonem deterruisset?
+                </p>
+                <p>
+                    At sea affert voluptua appareat! Quo diam postulant cu, et pri illum dicit, sed ei vide invenire. Corpora efficiendi mea ne. Clita admodum mel ad, nostrud accusamus consetetur cu sea. Elitr nominati ei per.
+                </p>
+                <p>
+                    Erroribus adversarium his te. Ad eos odio dicta ubique. Has te solet possit vocent, vix doctus ancillae id, mea similique forensibus ex. Ius ne odio ceteros, ad cum postea ancillae voluptatum. Eu quo quod discere, ei sea referrentur definitionem.
+                </p>
+                <p>
+                    Ea vim scripta ullamcorper, ius putent fabellas eloquentiam an, ei nisl impetus electram ius. Ad omnes commune vis? Quas nullam eam in, te feugait temporibus usu? At qui amet paulo.
+                </p>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>
+                        Sea te solet accusata! Docendi fuisset legendos eam ad, eam ut dicam latine aliquando, ea pro facilis platonem! Has quot consequat ex. Antiopam mnesarchum ne has, vis ullum lobortis at, doming verterem repudiandae cu his. Vel ne suas legendos, nam alienum explicari iracundia ad. Pri dolorem fuisset mnesarchum ut. Sit inermis scriptorem complectitur an.
+                    </p>
+                    <p>
+                        Ut vix omnis postulant, cu has urbanitas moderatius? No sed assentior theophrastus, dignissim definitionem est in, ea nec unum atqui vituperatoribus. Alienum suavitate eu eum? Ex hinc cetero pertinax vel. Summo vocent integre nec ut, per te ludus dolor!
+                    </p>
+                    <p>
+                        Soluta posidonium scriptorem id sea, principes disputationi quo at, cetero propriae deseruisse sit no! Te bonorum incorrupte mea, everti tincidunt has ut! Sea eu sumo utroque forensibus. Cum munere graeci dignissim no, quis utinam eam ea! Cu qui dissentias constituam! Est ex discere deseruisse omittantur?
+                    </p>
+                    <p>
+                        Eos an prompta noluisse, ei vel vide iisque. Partiendo instructior intellegebat ad qui. Ius eu harum democritum, cibo postulant definiebas id ius. Mel detracto instructior ex. Nec eu quem errem.
+                    </p>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                        Veri voluptatum vis an. Vide virtute et mea. His eu soleat legendos sententiae, has malis graece ea. Mea ad nihil alterum? Solum liber percipitur an nec, suas laudem id his! Ei audire equidem eos?
+                    </p>
+                    <p>
+                        Usu no idque temporibus, ius timeam quaeque corpora te? Mucius graeci nemore quo at, ex facer signiferumque sed! Has te porro dolorum facilisi, eos ei sint fabulas singulis. Melius fierent nec ea, mel ex augue officiis. Reque harum nobis sea no. Pri eius tamquam cotidieque ea, nec in option liberavisse concludaturque, ea pro accumsan noluisse interpretaris.
+                    </p>
+                    <p>
+                        Quot prima ad sed, ex eum wisi ipsum gubergren, ut mei odio postulant? Vix no suscipit apeirian. Falli blandit cu vel, et per dolore urbanitas definitiones? Ne natum facilisi pri.
+                    </p>
+                    <p>
+                        Tincidunt pertinacia has et, ne mazim verear scripta sit. No audire fierent vim! Te duo prodesset vituperata, meis illud regione no mei, at aperiri quaerendum suscipiantur his. His reque velit no, nec luptatum pertinacia reprehendunt no! Ut mei minim option volumus. Discere sensibus eloquentiam id mel.
+                    </p>
+                    <p>
+                        Sit iusto oblique ad, no audire dissentias sit! Te sed suscipit scripserit sadipscing. His ad esse consequat, eos ei dolor option ceteros, legendos pericula democritum te pri. Usu mazim ridens et, ea usu graeci sensibus, ad sed everti maiorum! Duo te choro dictas reformidans. Ea pericula eloquentiam dissentiunt vis!
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p>
+                        Sea te solet accusata! Docendi fuisset legendos eam ad, eam ut dicam latine aliquando, ea pro facilis platonem! Has quot consequat ex. Antiopam mnesarchum ne has, vis ullum lobortis at, doming verterem repudiandae cu his. Vel ne suas legendos, nam alienum explicari iracundia ad. Pri dolorem fuisset mnesarchum ut. Sit inermis scriptorem complectitur an.
+                    </p>
+                    <p>
+                        Ut vix omnis postulant, cu has urbanitas moderatius? No sed assentior theophrastus, dignissim definitionem est in, ea nec unum atqui vituperatoribus. Alienum suavitate eu eum? Ex hinc cetero pertinax vel. Summo vocent integre nec ut, per te ludus dolor!
+                    </p>
+                    <p>
+                        Soluta posidonium scriptorem id sea, principes disputationi quo at, cetero propriae deseruisse sit no! Te bonorum incorrupte mea, everti tincidunt has ut! Sea eu sumo utroque forensibus. Cum munere graeci dignissim no, quis utinam eam ea! Cu qui dissentias constituam! Est ex discere deseruisse omittantur?
+                    </p>
+                    <p>
+                        Eos an prompta noluisse, ei vel vide iisque. Partiendo instructior intellegebat ad qui. Ius eu harum democritum, cibo postulant definiebas id ius. Mel detracto instructior ex. Nec eu quem errem.
+                    </p>
+                    <p>
+                        Suas iuvaret te his, ludus utinam consectetuer at duo? Pri diam audire singulis te, no his mutat quodsi! His utinam apeirian et, pro te summo mentitum. Dico docendi intellegat qui ne? Tale illum animal has cu, sea te ferri luptatum theophrastus? Semper ocurreret eam an, sit ne alia decore quaerendum.
+                    </p>
+                    <p>
+                        Ei est brute exerci numquam, omnes eripuit usu et, audire insolens ad eos. Et congue facete deleniti sed, ei alia eius legimus cum! Mei minim tractatos an, ut eam omnis possit, eam deleniti expetenda ad. Cu sed solet feugait, inimicus splendide qui an, vim ad veri vocent nominati. Cum et vitae consul singulis, legere fastidii moderatius eos at, mea vidisse iudicabit deterruisset ex! Sit ea dicta errem dolores, est veritus iudicabit et.
+                    </p>
+                    <p>
+                        Quot simul ei mea. Gubergren evertitur nec at? In salutandi facilisis eos. Vel error percipitur ei, nostrud laboramus necessitatibus per ea, ne nisl agam atqui sed? Ex mea cetero delectus appellantur.
+                    </p>
+                    <p>
+                        Eam no fugit feugiat, ex voluptatum delicatissimi pri. Nam no illum epicurei dissentiunt? Est partiendo efficiendi accommodare ex? Est et novum quando explicari, duo scripta consetetur ne. Vel munere dicunt petentium te, ullum sensibus mei ea. Ad vel fabellas apeirian electram, quo elit omittam et.
+                    </p>
+                    <p>
+                        Ius mediocrem posidonium cu, mea eu soleat delenit mentitum. Ei aliquid insolens vel! Doming albucius an per, vix et nibh sonet labore? Vide tempor his te, mei an nemore perpetua. Graeci senserit pri in, no labore audiam labores eos. Liber veniam aliquando at sed, clita moderatius vel te, te duis tation delenit eam! Vero errem voluptaria ut has, ne zril munere persius eam, eu timeam copiosae eos.
+                    </p>
+                    <p>
+                        Sed partiendo scribentur ei. Quo in altera blandit deleniti. Suas debitis repudiare id vel! Ne cum doming cetero debitis, oratio nullam eos ei.
+                    </p>
+                    <p>
+                        At eam decore epicurei sententiae, vocent blandit corrumpit ea nam. Ut per quod maiestatis! Vel velit incorrupte consequuntur ne, quando utroque qualisque ei cum, sed ei facete graecis hendrerit. Probo vulputate no vim, paulo persecuti assueverit in sit. Amet molestie ut vel, vim id labores similique!
+                    </p>
+                    <p>
+                        Eu pro illum iudicabit adversarium? Ne clita vocent cotidieque duo, ius ei oportere consetetur. Sea id alii simul tacimates! Eos elitr dissentiunt id, ei per fuisset volumus lobortis, eam ex dicta novum.
+                    </p>
+                    <p>
+                        No eum impetus lobortis partiendo? Te velit possit disputationi duo, velit legendos cotidieque mel cu. Ei nisl tacimates recteque sed. Ut duo natum illum!
+                    </p>
+                    <p>
+                        Habeo doctus duo ut, nec ut habeo sonet, ex platonem voluptatum reprehendunt cum. Diceret deserunt eum id, vitae tamquam cu nec, inani posidonium qui at. Eam ut quidam torquatos expetendis, ea assum feugiat honestatis vix. In odio dolorum veritus usu, tota solet invidunt cu quo.
+                    </p>
+                    <p>
+                        At eos habemus maluisset? Modo vide eu vim, vis omnium alienum ut? Facer mandamus vix an? Nam veniam numquam et. No ferri exerci mandamus mea, rebum repudiare id cum, eu mel omittantur mediocritatem. Ei gloriatur temporibus liberavisse mel, bonorum aliquando sit at.
+                    </p>
+                    <p>
+                        Cu tation offendit nec, in luptatum laboramus definitionem sed. Cu animal discere similique vel, has in enim noster! Veritus perpetua pri in, pro ut affert volutpat, expetenda prodesset ea vis? Diceret equidem et per, nec ex mentitum perfecto! Labore complectitur vis at, qui at lobortis ocurreret, probo assentior concludaturque ut pri! Ex per doming labitur, ea vim inermis delectus sententiae, id cum utinam mollis. Ut putant quodsi perpetua sea, vel ex velit dolore commune?
+                    </p>
+                    <p>
+                        Vide eius ullum ad eos, velit ludus sea in, solet postulant consulatu ea pro? Te essent suscipiantur eam, nemore appetere sit te. Ludus iudico conceptam cum ex! Dico corrumpit mea ex, est vivendum incorrupte ei.
+                    </p>
+                    <p>
+                        No pro integre invidunt consectetuer, harum nobis referrentur quo ut, malorum veritus omittam et mea. Ipsum soleat per ne, mea eu facete doctus perfecto, enim audiam posidonium vel an. No nulla munere detracto cum, facilis imperdiet ei duo. Oratio labores accusam sit te, putant omnium voluptatibus pro ea, iisque invenire complectitur has ex! Nam te duis timeam tritani, saperet deleniti perfecto et sit! Ne stet admodum sit, conceptam vituperata qui id.
+                    </p>
+                    <p>
+                        Solum dicat tincidunt mel ei, at sed semper iudicabit, et primis fabellas quo? Vis ad docendi necessitatibus. Vel ea novum nominavi, at omnis animal fabulas usu, doctus voluptaria id mea. Sanctus noluisse accusamus duo no, et mea maiorum postulant. Eam an quis intellegam, nam homero vituperatoribus ei, ea nam integre fastidii. Cu veri partem praesent nam, pri in ferri altera?
+                    </p>
+                    <p>
+                        Eos quod ignota ne, porro semper aliquam ad eum. Ex vituperata accommodare definitiones vim, eos at inciderint eloquentiam? Id congue eripuit delicata duo, te nec movet euismod facilis, ius ad autem tritani equidem. Laudem offendit nec no, ex saepe feugiat sea, graeci regione iuvaret in duo. Deserunt persecuti vim in, et magna saepe expetendis nam, platonem comprehensam et has!
+                    </p>
+                    <p>
+                        In eam numquam feugait, suas eius atqui nam id, has ex quis stet dissentiet. Probo sententiae ex vim, eum eu eripuit officiis gubergren? Pri facer partem liberavisse cu, in mollis docendi has! Pri malis ridens detracto id, ea eam elitr animal viderer!
+                    </p>
+                    <p>
+                        Iisque offendit et vel, nec vidit ocurreret ea? Eu stet graecis ius. Sapientem corrumpit usu eu? Vis liber omnes ei, eu delenit reformidans nec, an amet nobis dissentias pri! Stet veniam integre pri ea, porro detracto adversarium ne his?
+                    </p>
+                    <p>
+                        In alii oratio decore sea, exerci minimum eam cu? Ex est amet assum. Atqui diceret at pro, id ullum commodo qui? Pro ad magna dicta legendos, scripta cotidieque accommodare in eum, id eos prima ullum? An qui equidem consequat scribentur, possim bonorum habemus an nec.
+                    </p>
+                    <p>
+                        Mel te graeco viderer definitiones. Duo eu vocent option appareat, ad lorem ullum alienum qui. Et eos munere fierent tincidunt, et vel definiebas scripserit! Odio suas simul vis eu, te diam.";
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+<br />
+    <div class="container">
+        <div class="jumbotron">
+            <h1>This takes up space</h1>
+            <h2>Did you say space?</h2>
+            <h3>Did he say space?</h3>
+            <h4>Is he a she????</h4>
+            <p>lol, this area of the page has one purpose<br /> and one purpose only....<br />to take up space<br /><br />Why?<br />Why you ask?</p>
+            <p>
+                This plugin must be able to know where it is needed on a page and where it is not needed on a page. If it didn't know the page real estate location of it's own context area, then it would end up forcing the user to define offsets from top and bottom of the page just to attempt to make the plugin only work on the area in which their text to be lite-the-way-ifyed is. This would suck, bad, because there is no telling how tall the context area might be on different sized displays. We don't want lite-the-way plugin users to design their sites to suite lite-the-way, we want lite-the-way users to out of the box give a great ux to their page by only having to type one line <code>jQuery('p').litetheway({document:'#myTextHolder'});</code><br />To test that out, we have added this large portion of text to the bottom of this page to make sure that our code can figure out where the .coolbeans element starts and stops. Thanks for using, sorry for reading!
+            </p>
+        </div>
+    </div>
+    <hr>
+
+    <footer>
+        <p>&copy; Company 2015</p>
+    </footer>
+    </div>
+    <!-- /container -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
+    <script>
+        window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.js"><\/script>')
+    </script>
+    <script src='js/lite-the-way/jquery.lite-the-way.js'></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+
+    <script src="js/main.js"></script>
+    <script>
+
+        /** This has nothing to do with the plugin */
+        $(function (){
+            $(document).on('scroll', function (e) {
+                if ( $(document).scrollTop() > 0 ) {
+                    $('nav').css('display','none');
+                } else {
+                    $('nav').css('display','');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
