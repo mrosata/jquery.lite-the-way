@@ -1,3 +1,17 @@
+/**
+ * Lite-the-Way jQuery plugin
+ * @author Michael Rosata
+ * @email  mike@onethingsimple.com
+ * @version 0.2
+ * @since 1.11
+ */
+/* Notes
+# Change log v0.2
+# - Removed Overlay Color as on option on the plugin. This is an option that should be set through CSS. Using JS to change color settings is a bit too obtrusive.
+# - Changed `margin` to represent the entire margin area, where before it only represented half
+# - Fixed the disable feature. Call $(selector).litetheway('disable') to turn the plugin off 
+*/
+
 // Lite The Way jQuery plugin
 (function ( $, window, undefined ) {
     "use strict";
@@ -5,30 +19,30 @@
         this.regional = [];
         this.regional[''] = {}; // There shouldn't be an localization needed for this plugin
         this._defaults = {
-            // Pixels from top of the 
-            start    : 240,
-            margin   : 135,
-            faded    : 'fade-out-text',
-            active   : 'active-text',
-            topMult  : 1,
-            bottomMult : 1,
-            overlays : true,
-            autoMargin  : 0.25,
-            fixedMargin : false,
-            document    : document,
-            overlayClass : 'litetheway-overlay',
-            overlayPadding : 10,
-            overlayColor : false
+            // Pixels from the top of the plugin context container
+            start          : 140,
+            // Size of margin in pixel if the autoMargin is set to false
+            margin         : 290,
+            selector       : 'p',
+            faded          : 'faded-class',
+            active         : 'active-class',
+            topMult        : 1,
+            bottomMult     : 1,
+            overlays       : true,
+            auto           : 0.25,
+            fixedMargin    : false,
+            context        : document,
+            initClass      : 'lite-the-way',
+            overlayClass   : 'lite-the-way-overlay',
+            overlayPadding : 10
         };
         
         $.extend(this._defaults, this.regional);
     }
      
     $.extend( LiteTheWay.prototype, {
-        pluginInit   : false,
-        initClass    : 'lite-the-way',
-        windowHeight : $(window).height(),
-        selector     : 'p',
+        _pluginInit   : false,
+        _windowHeight : $(window).height(),
         _topOffset   : 0,   // If context isn't document, then this will tell us how far down the page to start our plugins logic 
         _bottomOffset: 0,
         _contextHeight : 0, // The height of the element that holds our text
@@ -52,11 +66,39 @@
             if ( target.hasClass(this.initClass) ) {
                 return; // We have already init this elm.
             }
+            // Set the init class on every item in collection
             target.addClass(this.initClass);
-            if (!this.pluginInit) {
+            if (!this._pluginInit) {
                 this.setDefaults( options );
                 this._enablePlugin();
             }
+            return target;
+        },
+        
+        /**
+         * Adds an element into the _collection so we don't have to rebuild every scroll
+         * @param HTMLElement target element to add to _collection
+         */
+        _attachElements : function ( target ) {
+            if ( !this._collection ) {
+                // make a jQuery collection any elements with initClass
+                this._collection = $('.'+plugin.initClass);
+            }
+            if ( target ){
+                // Add the passed target/s into the jQuery collection
+                this._collection = this._collection.add(target);
+            }
+            return this._collection;
+        },
+        
+        _removeElements : function ( target ) {
+            if ( !this._collection ) {
+                // make a jQuery collection any elements with initClass
+                this._collection = $('.'+plugin.initClass);
+            } else if ( target ) {
+                this._collection = this._collection.remove(target);
+            }
+            return this._collection;
         },
         
         /**Handle scroll, change vars, make adjustments
@@ -67,50 +109,55 @@
                 cutoffElmPastBottom = this.cutoff,
                 startMargin = this.start,
                 endMargin = this.end || this.start,
-                readingMargin = this.margin,
+                readingMargin = this.margin/2,
                 pageOffset = this.pageOffset = +$(document).scrollTop(),
-                documentHeight = this.documentHeight,
-                windowHeight   = this.windowHeight,
+                documentHeight = this._documentHeight,
+                windowHeight   = this._windowHeight,
                 contextHeight = this._contextHeight,
-                centerPage = this.centerPage,
+                centerPage = this._centerPage,
                 activeClass = this.active,
                 bottomMult = this.bottomMult,
                 topMult = this.topMult,
                 fadedClass = this.faded,
                 topOffset = this._topOffset,
                 bottomOffset = this._bottomOffset,
+                collection = this._collection,
                 // Top of page > startMargin + the margin from top of context container to page start....
                 // Bottom of page < end of context container minus endMargin 
                 withinTheContext = (pageOffset > startMargin + topOffset && pageOffset < contextHeight + topOffset - ( endMargin + windowHeight) );
             
+            
             /** Since we don't want to ask if 100 times. We ask 1 time */
-            if ( withinTheContext ) {
+            if ( withinTheContext) {
                 // If we have overlays, show them
                 $('.' + this.overlayClass + '').fadeIn(600);
-                $( this.selector, this.document ).each(function (e) {
-                
-                    elemOffsetTop = + $(this).offset().top;
-                    if (cutoffElmPastBottom) {
-                        elemOffsetBot = + elemOffsetTop + $(this).height();
-                        elemAboveLine =  (Math.abs(elemOffsetBot - pageOffset) < centerPage + readingMargin*bottomMult);
-                    } else {
-                        elemAboveLine = true;
-                    }
-                    if ( elemAboveLine && elemOffsetTop > pageOffset && Math.abs(elemOffsetTop - pageOffset) > centerPage - (readingMargin*topMult) && Math.abs(elemOffsetTop - pageOffset) < centerPage + readingMargin*bottomMult ) {
-                        $(this).removeClass(fadedClass).addClass(activeClass);
-                    } else {
-                        $(this).addClass(fadedClass).removeClass(activeClass);
-                    }
-                    
-                });
+                if (collection.length) {
+                    collection.each(function (e) {
+                        elemOffsetTop = + $(this).offset().top;
+                        if (cutoffElmPastBottom) {
+                            elemOffsetBot = + elemOffsetTop + $(this).height();
+                            elemAboveLine =  (Math.abs(elemOffsetBot - pageOffset) < centerPage + readingMargin*bottomMult);
+                        } else {
+                            elemAboveLine = true;
+                        }
+                        if ( elemAboveLine && elemOffsetTop > pageOffset && Math.abs(elemOffsetTop - pageOffset) > centerPage - (readingMargin*topMult) && Math.abs(elemOffsetTop - pageOffset) < centerPage + readingMargin*bottomMult ) {
+                            $(this).removeClass(fadedClass).addClass(activeClass);
+                        } else {
+                            $(this).addClass(fadedClass).removeClass(activeClass);
+                        }
+
+                    });
+                }
             } else {
                 // if we have overlays, hide them
-                $('.' + this.overlayClass + '').fadeOut(600);
-                
-                // We are past top or bottom of context, so remove all lite-the-way classes
-                $( this.selector, this.document ).each(function (e) {
-                    $(this).removeClass(fadedClass).removeClass(activeClass);
-                });
+                $('.' + this.overlayClass + '').fadeOut(400);
+
+                // We are past top or bottom of context, so remove both fadedClass and activeClass
+                if (collection.length) {
+                    collection.each(function (e) {
+                        $(this).removeClass(fadedClass).removeClass(activeClass);
+                    });
+                }
             }
         },
         
@@ -119,19 +166,22 @@
          * @param Obj e Event Object
          */
         _resizeHandler : function (e) {
-            var auto = this.autoMargin,
+            // pull the options into local scope
+            var auto = this.auto,
                 overlaySelect = '.'+this.overlayClass+'',
-                windowHeight = this.windowHeight = $(window).height(),
-                documentHeight = this.documentHeight = $(document).height(),
-                centerPage  = this.centerPage = windowHeight/2,
-                contextHeight = this._contextHeight = $(this.document).length ? $(this.document).height() : 0,
-                topOffset = this._topOffset =  +$(this.document).offset().top,
-                readingMargin = this.margin,
+                overlayPadding = this.overlayPadding,
+                windowHeight = this._windowHeight = $(window).height(),
+                documentHeight = this._documentHeight = $(document).height(),
+                centerPage  = this._centerPage = windowHeight/2,
+                contextHeight = this._contextHeight = $(this.context).length ? $(this.context).height() : 0,
+                topOffset = this._topOffset =  +$(this.context).offset().top,
+                readingMargin = this.margin/2,
                 bottomOffset = this._bottomOffset = ( documentHeight - ( topOffset + contextHeight ));
-            
+            console.log(centerPage);
             if (auto) {
                 // If auto_margin defined, then we have to recalc margin heights
-                readingMargin = this.margin = auto >= 1 ? windowHeight / auto : windowHeight * auto;
+                readingMargin = auto >= 1 ? windowHeight / auto : windowHeight * auto;
+                this.margin = parseInt(readingMargin * 2, 10);
             }
             
             $(overlaySelect+':eq(0)').css({
@@ -145,7 +195,7 @@
             $( document ).scroll();
         },
         
-        /**Setup Event handlers and change this.pluginInit to true
+        /**Setup Event handlers and change this._pluginInit to true
          * @param HTMLElement target 
          */
         _enablePlugin : function( target ) {
@@ -161,31 +211,39 @@
                 plugin._resizeHandler();
             });
             // If the text area is document, prepend overlays to body, else put them inside where text is
-            if ( opts.document === document )
+            if ( opts.context === document ) {
                 $('body').prepend(overlays);
-            else
-                $(opts.document).prepend(overlays);
+            } else {
+                if ($(opts.context).length) {
+                    $(opts.context).prepend(overlays);
+                }
+            }
+            
             
             // Set the init state to true so we don't loop this over and over
             $( window ).resize();
             
             // setup user defined callbacks
-            this.pluginInit = true;
+            this._pluginInit = true;
         },
         
-        /**Remove Event handlers and switch this.pluginInit false
-         * @param {[[Type]]} target [[Description]]
+        /**Remove Event handlers and switch this._pluginInit false
+         * @param  target [[Description]]
          */
         _disablePlugin : function( target ) {
+            var fadedClass = this.faded || '',
+                activeClass = this.active || '';
             // Turn off event handlers
             $( document ).off('scroll.litetheway');
             $( window ).off('resize.litetheway');
             // remove the overlays from the page
-            $(overlays).remove();
+            if (this.overlays && $('.'+this.overlayClass).length) {
+                $('.'+this.overlayClass).remove();
+            }
             // remove the lite-the-way classes
-            $('.lite-the-way').fadeOut();
+            $('.lite-the-way').removeClass('lite-the-way ' + fadedClass + ' ' + activeClass);
             // set init to false so next time
-            this.pluginInit = false;
+            this._pluginInit = false;
         },
         
         /*I will do these another day*/
@@ -196,13 +254,28 @@
     var plugin = $.litetheway = new LiteTheWay();
     
     $.fn.litetheway = function ( options ) {
-        if (plugin.pluginInit){
-            plugin._disablePlugin;
+        options = options || {};
+        if ( $.isPlainObject(options)) {
+            if (plugin._pluginInit){
+                plugin._disablePlugin;
+            }
+            var context = !!options.context ? options.context : document;
+            plugin._attachElements( $(context).find(this) );
+            return this.each( function() {
+                plugin._attachPlugin( this, options );
+            });
+        } else {
+            if (typeof options == 'string') {
+                if ( $.isFunction( plugin['_'+options+'Plugin'] ) ) {
+                    var userArgs = [this.selector];
+                    if (arguments.length > 1) {
+                        userArgs = userArgs.concat( Array.prototype.splice.call(arguments) );
+                    }
+                    plugin['_'+options+'Plugin']();
+                }
+            }
         }
-        return this.each( function() {
-            plugin._attachPlugin( this, options || {} );
-        });
+        
     };
     
 }(jQuery, window));
-

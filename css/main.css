@@ -16,38 +16,63 @@ body {
 .demo-text {
     position: relative;
 }
-#testMeasure1 {
-    display: block;
-    position: absolute;
-    background: rgba(45, 45, 93, 0.6);
-    top: 0; left: 0; right: 0;
-    height: 160px;
-}
-#testMeasure2 {
-    display: block;
-    position: absolute;
-    background: rgba(45, 45, 93, 0.6);
-    bottom: 0; left: 0; right: 0;
-    height: 260px;
-}
-p.fade-out-text {
+.faded-class {
     color: #aeaeae;
+}
+h2,h3,h4 {
+    color: #444;
+}
+/* The image wrapping DIV */
+.img-wrap {
+    display: block;
+    padding: 0;margin:1em auto;
+    text-align: center;
+    text-indent: 0;
+    background: #313131;
+    background: #6e6e6e; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover,  #6e6e6e 0%, #0e0e0e 100%); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#6e6e6e), color-stop(100%,#0e0e0e)); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover,  #6e6e6e 0%,#0e0e0e 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover,  #6e6e6e 0%,#0e0e0e 100%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover,  #6e6e6e 0%,#0e0e0e 100%); /* IE10+ */
+    background: radial-gradient(ellipse at center,  #6e6e6e 0%,#0e0e0e 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6e6e6e', endColorstr='#0e0e0e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+.img-wrap-md {
+    width: 350px;
+}
+.img-wrap-long {
+    width: 910px;
+}
+p.img-wrap img {
+    transition: .4s;
+}
+p.img-wrap.faded-class img {
+    padding:0;margin:0 auto;
+    opacity: 0.25;
+    height: auto;
 }
 p {
     text-indent: 1.75em;
+    margin: 1em;
     color: #111;
-    transition: .4s all;
+    transition: .3s all;
 }
-.litetheway-overlay {
-    display: none;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background: rgba(14,22,22,.1);
-    z-index: 1;
+.list-group-item-text.lite-the-way.faded-class { color: #a8a8a8; }
+.list-group-item.lite-the-way.faded-class {
+    color: #a8a8a8;
+    border: 1px solid #ddd;
+    text-shadow: none;
+    background: rgb(255,255,255); /* Old browsers */
+    background: -moz-linear-gradient(top,  #fff 0%, #dedede 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fff), color-stop(100%,rgba(229,229,229,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #fff 0%,#dedede); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #fff 0%,#dedede); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #fff 0%,#dedede); /* IE10+ */
+    background: linear-gradient(to bottom,  #fff 0%,#dedede); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#dedede',GradientType=0 ); /* IE6-9 */
 }
+
 code.code-block {
     display: block;
     background: #f9f2f4;
@@ -58,9 +83,10 @@ em.st {
 span.comment {
     color: #999;
 }
+
 @media (max-width: 768px) {
     body {
-        font-size: 15px;
+        font-size: 16px;
     }
     code.code-block {
         font-size: 13px;
@@ -68,26 +94,93 @@ span.comment {
     span.comment {
         display: none;
     }
+    p.img-wrap, p.img-wrap img, p.img-wrap.faded-class img {
+        width: 245px;
+        height: 168px;
+    }
 }
-@media (max-width: 539px) {
+@media (max-width: 500px) {
     body {
-        font-size: 14px;
+        font-size: 15px;
     }
     code.code-block {
         font-size: 11px;
     }
+     p.img-wrap, p.img-wrap img, p.img-wrap.faded-class img {
+        width: 175px;
+        height: 140px;
+    }
 }
 
 
+.lite-the-way-overlay {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(50,60,100,.125);
+    z-index: 1000;
+}
+.cursive {
+font-family: 'Righteous', cursive;
+}
 
 
+.config-icon {
+    margin-right: -1.2em;
+}
+.config-table {
+    
+}
+.config-table .row:first-of-type div {
+    border-right: 1px solid #444;
+}
+.config-table .row:first-of-type div:last-of-type {
+    border-right: none;
+}
+.config-table .row {
+    padding: .4em 0;
+    border-bottom: 1px solid #444;
+}
+.config-table .row .option-name {}
+.config-table .row .option-default {}
+.config-table .row span.label {
+    font-weight: bold;
+    text-decoration: underline;
+    text-transform: uppercase;
+    text-align: left;
+    text-indent: 0;
+    color: #3d3d3d;
+    width: 6.5em;
+    float: left;
+    height: 1.5em;
+}
+.config-table .row .option-description {}
+.bg-info-2 {
+    background: #ffe1dd;
+    background: rgba(255, 225, 221, 0.63);
+}
 
 
-
-
-
-
-
-
-
-
+/*
+    These are just for the demo
+*/
+#testMeasure1 {
+    display: block;
+    position: absolute;
+    background: rgba(115, 143, 231, 0.5);
+    top: 0; left: 0; right: 0;
+    height: 240px;
+}
+#testMeasure2 {
+    display: block;
+    position: absolute;
+    background: rgba(115, 143, 231, 0.5);
+    bottom: 0; left: 0; right: 0;
+    height: 80px;
+}
+.hidden {
+    display: none !important;
+}
